@@ -1,5 +1,8 @@
 package io.skai.okta.internshipstreamingserviceparserxml.item;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class ItemService {
 
     public Item getItem() {
