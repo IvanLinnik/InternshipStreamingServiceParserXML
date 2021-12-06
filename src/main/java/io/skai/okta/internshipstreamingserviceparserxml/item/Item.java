@@ -1,18 +1,9 @@
 package io.skai.okta.internshipstreamingserviceparserxml.item;
 
-//@XmlRootElement(name = "item")
 public class Item {
-
-    //    @XmlElement(name = "title", required = true)
     private String title;
-
-    //    @XmlElement(name = "description", required = true)
     private String description;
-
-    //    @XmlElement(name = "pubDate", required = true)
     private String pubDate;
-
-    //    @XmlElement(name = "link", required = true)
     private String link;
 
     public Item() {

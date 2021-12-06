@@ -1,17 +1,24 @@
 package io.skai.okta.internshipstreamingserviceparserxml.item;
 
+import io.skai.okta.internshipstreamingserviceparserxml.util.LostFilmParser;
 import org.springframework.stereotype.Service;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ItemService {
-
-    public Item getItem() {
-        return new Item(
-                "Великая (The Great). Животные позывы. (S02E05)",
-                "<![CDATA[ <img src=\"//static.lostfilm.top/Images/509/Posters/image.jpg\" alt=\"\" /><br /> ]]>",
-                "Sun, 05 Dec 2021 20:57:00 +0000",
-                "https://www.lostfilmtv1.site/mr/series/The_Great/season_2/episode_5/"
-        );
+    public List<Item> getItem() {
+        List<Item> list = new ArrayList<>();
+        try {
+            list = LostFilmParser.getItemList();
+        } catch (ParserConfigurationException | IOException | SAXException e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 
 }
