@@ -13,12 +13,14 @@ public class ItemController {
 
     private final ItemService itemService;
 
+
     @Autowired
     public ItemController(ItemService itemService) {
         this.itemService = itemService;
     }
 
     @GetMapping("item")
+
     public List<Item> getItem() {
         return itemService.getItem();
     }
