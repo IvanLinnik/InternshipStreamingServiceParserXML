@@ -27,7 +27,10 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     // https://mvnrepository.com/artifact/org.quartz-scheduler/quartz
-    implementation group: 'org.quartz-scheduler', name: 'quartz', version: '2.3.2'
+    // implementation group: 'org.quartz-scheduler', name: 'quartz', version: '2.3.2'
+
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-quartz
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-quartz', version: '2.5.4'
 }
 
 test {
