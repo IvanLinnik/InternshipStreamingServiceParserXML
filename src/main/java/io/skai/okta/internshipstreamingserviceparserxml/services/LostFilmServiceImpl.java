@@ -1,6 +1,8 @@
 package io.skai.okta.internshipstreamingserviceparserxml.services;
 
-import io.skai.okta.internshipstreamingserviceparserxml.dto.Item;
+import io.skai.okta.internshipstreamingserviceparserxml.dto.RssItem;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.xml.sax.SAXException;
 
@@ -9,12 +11,17 @@ import java.io.IOException;
 import java.util.List;
 
 @Service
-public class ItemService {
-    public List<Item> getItem() {
+@Slf4j
+@AllArgsConstructor
+public class LostFilmServiceImpl implements LostFilmService {
+    private final LostFilmParser parser;
+
+    @Override
+    public List<RssItem> getItems() {
         try {
-            return new LostFilmParser().getItemList();
+            return parser.getItemList();
         } catch (ParserConfigurationException | IOException | SAXException e) {
-            e.printStackTrace();
+            log.error("", e);
         }
         return List.of();
     }

@@ -1,6 +1,8 @@
 package io.skai.okta.internshipstreamingserviceparserxml.services;
 
-import io.skai.okta.internshipstreamingserviceparserxml.dto.Item;
+import io.skai.okta.internshipstreamingserviceparserxml.dto.RssItem;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -17,19 +19,17 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Component
-public class LostFilmParser {
-    //    @Value("${uri}")
-    private static final String URI = "https://www.lostfilm.tv/rss.xml";
+@RequiredArgsConstructor
+class LostFilmParser {
+    @Value("${lostfilm.rss.url}")
+    private final String url;
 
-    //    @Value("${mainTag}")
-    private static final String MAIN_TAG = "item";
+    @Value("${lostfilm.rss.tag}")
+    private final String lostfilmRssTag;
 
-    LostFilmParser() {
-    }
-
-    public List<Item> getItemList() throws ParserConfigurationException, IOException, SAXException {
+    public List<RssItem> getItemList() throws ParserConfigurationException, IOException, SAXException {
         Document document = getDocument();
-        NodeList nodeList = document.getElementsByTagName(MAIN_TAG);
+        NodeList nodeList = document.getElementsByTagName(lostfilmRssTag);
 
         return IntStream
                 .range(0, nodeList.getLength()).mapToObj(nodeList::item)
@@ -41,14 +41,14 @@ public class LostFilmParser {
     private Document getDocument() throws ParserConfigurationException, SAXException, IOException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
-        Document document = builder.parse(URI);
+        Document document = builder.parse(url);
         document.getDocumentElement().normalize();
         return document;
     }
 
-    private Item getItem(Node node) {
+    private RssItem getItem(Node node) {
         Element element = (Element) node;
-        return new Item(
+        return new RssItem(
                 getTagValue("title", element),
                 getTagValue("description", element),
                 getTagValue("pubDate", element),
