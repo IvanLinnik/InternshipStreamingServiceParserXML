@@ -1,9 +1,6 @@
 package io.skai.okta.internshipstreamingserviceparserxml.scheduler;
 
-import org.quartz.JobBuilder;
-import org.quartz.JobDetail;
-import org.quartz.Trigger;
-import org.quartz.TriggerBuilder;
+import org.quartz.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -15,7 +12,7 @@ public class SpringQuartzConfig {
     public JobDetail jobDetail() {
         return JobBuilder.newJob().ofType(CheckUpdateJob.class)
                          .storeDurably()
-                         .withIdentity("Updater")
+                         .withIdentity(new JobKey("HourlyWork", Scheduler.DEFAULT_GROUP))
                          .withDescription("Invoke Lostfilm RSS update service...")
                          .build();
     }
@@ -23,7 +20,7 @@ public class SpringQuartzConfig {
     @Bean
     public Trigger trigger(JobDetail job) {
         return TriggerBuilder.newTrigger().forJob(job)
-                             .withIdentity("Time_Trigger")
+                             .withIdentity(new TriggerKey("HourlyWorkTrigger", Scheduler.DEFAULT_GROUP))
                              .withDescription("Invoke check update every 1 hour")
                              .withSchedule(simpleSchedule().repeatForever().withIntervalInHours(1))
                              .build();
