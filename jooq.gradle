@@ -1,0 +1,55 @@
+import groovy.xml.MarkupBuilder
+import org.jooq.codegen.GenerationTool
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'mysql:mysql-connector-java:8.0.26'
+        classpath 'org.jooq:jooq-codegen:3.11.3'
+        classpath 'org.glassfish.jaxb:jaxb-runtime:2.3.1'
+    }
+}
+
+task generateJooq {
+    doLast {
+        def writer = new StringWriter()
+        def xml = new MarkupBuilder(writer)
+                .configuration('xmlns': 'http://www.jooq.org/xsd/jooq-codegen-3.11.0.xsd') {
+                    jdbc() {
+                        driver('com.mysql.cj.jdbc.Driver')
+                        url('jdbc:mysql://localhost:3306/app?useSSL=false')
+                        user('root')
+                        password('Qwe123!!')
+                    }
+                    generator() {
+                        database() {
+                            inputSchema 'app'
+                            outputSchemaToDefault true
+                            includeIndexes false
+                            includes 'episodes'
+                            forcedTypes() {
+                                forcedType() {
+                                    name 'BOOLEAN'
+                                    expression 'invalid|enabled_product_fetch'
+                                }
+                            }
+                        }
+                        generate([:]) {
+                            pojos false
+                            daos false
+                            javaTimeTypes true
+                        }
+                        target() {
+                            packageName('io.skai.okta.internshipstreamingserviceparserxml.jooq.generated')
+                            directory('src/main/java')
+                        }
+                    }
+                }
+
+        GenerationTool.generate(writer.toString())
+    }
+}
+generateJooq.enabled = true
