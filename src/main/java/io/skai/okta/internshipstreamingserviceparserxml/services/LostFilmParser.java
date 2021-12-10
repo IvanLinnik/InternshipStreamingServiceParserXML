@@ -14,6 +14,8 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -51,7 +53,8 @@ class LostFilmParser {
         return new RssItem(
                 getTagValue("title", element),
                 getTagValue("description", element),
-                getTagValue("pubDate", element),
+                LocalDateTime.parse(getTagValue("pubDate", element),
+                        DateTimeFormatter.ofPattern("E, d MMM yyyy HH:mm:ss Z")),
                 getTagValue("link", element)
         );
     }

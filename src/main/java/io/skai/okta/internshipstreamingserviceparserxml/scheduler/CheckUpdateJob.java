@@ -13,6 +13,6 @@ public class CheckUpdateJob implements Job {
 
     @Override
     public void execute(JobExecutionContext context) {
-        service.getItems();
+        service.createNewItems();
     }
 }
