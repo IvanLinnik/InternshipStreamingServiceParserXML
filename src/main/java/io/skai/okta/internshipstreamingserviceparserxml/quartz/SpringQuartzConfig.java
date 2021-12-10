@@ -1,4 +1,4 @@
-package io.skai.okta.internshipstreamingserviceparserxml.scheduler;
+package io.skai.okta.internshipstreamingserviceparserxml.quartz;
 
 import org.quartz.*;
 import org.springframework.context.annotation.Bean;

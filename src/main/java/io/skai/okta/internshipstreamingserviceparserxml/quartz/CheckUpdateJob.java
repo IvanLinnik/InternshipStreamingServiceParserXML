@@ -1,4 +1,4 @@
-package io.skai.okta.internshipstreamingserviceparserxml.scheduler;
+package io.skai.okta.internshipstreamingserviceparserxml.quartz;
 
 import io.skai.okta.internshipstreamingserviceparserxml.services.LostFilmService;
 import lombok.RequiredArgsConstructor;
