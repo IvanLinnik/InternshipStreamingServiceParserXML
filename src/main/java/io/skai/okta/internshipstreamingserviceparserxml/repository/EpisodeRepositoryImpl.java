@@ -1,7 +1,8 @@
 package io.skai.okta.internshipstreamingserviceparserxml.repository;
 
-import io.skai.okta.internshipstreamingserviceparserxml.dto.RssItem;
+import io.skai.okta.internshipstreamingserviceparserxml.dto.Episode;
 import io.skai.okta.internshipstreamingserviceparserxml.jooq.generated.tables.records.EpisodesRecord;
+import io.skai.okta.internshipstreamingserviceparserxml.services.EpisodesConverter;
 import lombok.RequiredArgsConstructor;
 import org.jooq.DSLContext;
 import org.jooq.RecordMapper;
@@ -14,36 +15,37 @@ import static io.skai.okta.internshipstreamingserviceparserxml.jooq.generated.ta
 
 @Repository
 @RequiredArgsConstructor
-public class RssItemRepositoryImpl implements RssItemRepository {
+public class EpisodeRepositoryImpl implements EpisodeRepository {
     private final DSLContext dslContext;
+    private final EpisodesConverter episodesConverter;
 
     @Override
-    public void create(RssItem rssItem) {
-        if (getId(rssItem.getLink()).isEmpty()) {
+    public void create(Episode episode) {
+        if (getId(episode.getLink()).isEmpty()) {
             dslContext.insertInto(EPISODES,
                               EPISODES.TITLE,
                               EPISODES.DESCRIPTION,
                               EPISODES.PUBDATE,
                               EPISODES.LINK)
-                      .values(rssItem.getTitle(),
-                              rssItem.getDescription(),
-                              rssItem.getPubDate(),
-                              rssItem.getLink())
+                      .values(episodesConverter.getTitle(episode),
+                              episodesConverter.getDescription(episode),
+                              episodesConverter.getPubDate(episode),
+                              episodesConverter.getLink(episode))
                       .execute();
         } else {
-            update(rssItem);
+            update(episode);
         }
     }
 
     @Override
-    public List<RssItem> getItems() {
+    public List<Episode> getItems() {
         return dslContext
                 .selectFrom(EPISODES)
                 .fetch(getEpisodeRecordMapper());
     }
 
     @Override
-    public RssItem getItem(long id) {
+    public Episode getItem(long id) {
         return dslContext
                 .selectFrom(EPISODES)
                 .where(EPISODES.ID.eq(id))
@@ -51,7 +53,7 @@ public class RssItemRepositoryImpl implements RssItemRepository {
     }
 
     @Override
-    public RssItem getItem(String link) {
+    public Episode getItem(String link) {
         return dslContext
                 .selectFrom(EPISODES)
                 .where(EPISODES.LINK.eq(link))
@@ -59,12 +61,12 @@ public class RssItemRepositoryImpl implements RssItemRepository {
     }
 
     @Override
-    public void update(RssItem rssItem) {
+    public void update(Episode episode) {
         dslContext.update(EPISODES)
-                  .set(EPISODES.TITLE, rssItem.getTitle())
-                  .set(EPISODES.DESCRIPTION, rssItem.getDescription())
-                  .set(EPISODES.PUBDATE, rssItem.getPubDate())
-                  .where(EPISODES.LINK.eq(rssItem.getLink()))
+                  .set(EPISODES.TITLE, episodesConverter.getTitle(episode))
+                  .set(EPISODES.DESCRIPTION, episodesConverter.getDescription(episode))
+                  .set(EPISODES.PUBDATE, episodesConverter.getPubDate(episode))
+                  .where(EPISODES.LINK.eq(episodesConverter.getLink(episode)))
                   .execute();
     }
 
@@ -89,14 +91,13 @@ public class RssItemRepositoryImpl implements RssItemRepository {
                          .fetchOptional(EPISODES.ID);
     }
 
-    private RecordMapper<EpisodesRecord, RssItem> getEpisodeRecordMapper() {
-        return record -> RssItem
-                .builder()
-                .title(record.getTitle())
-                .description(record.getDescription())
-                .pubDate(record.getPubdate())
-                .link(record.getLink())
-                .build();
+    private RecordMapper<EpisodesRecord, Episode> getEpisodeRecordMapper() {
+        return record -> Episode.builder()
+                                .title(record.getTitle())
+                                .description(record.getDescription())
+                                .pubDate(record.getPubdate())
+                                .link(record.getLink())
+                                .build();
     }
 
 }

@@ -1,23 +1,25 @@
 package io.skai.okta.internshipstreamingserviceparserxml.services;
 
-import io.skai.okta.internshipstreamingserviceparserxml.dto.RssItem;
+import io.skai.okta.internshipstreamingserviceparserxml.dto.Episode;
 
 import java.util.List;
 
 public interface LostFilmService {
-    void createItem(RssItem rssItem);
 
-    void createNewItems();
+    void createEpisode(Episode episode);
 
-    List<RssItem> getItems();
+    void createNewEpisodes();
 
-    RssItem getItem(Long id);
+    List<Episode> getEpisodes();
 
-    RssItem getItem(String link);
+    Episode getEpisode(Long id);
 
-    void update(Long id, RssItem rssItem);
+    Episode getEpisode(String link);
 
-    void delete(Long id);
+    void updateEpisode(Long id, Episode episode);
 
-    void delete(String link);
+    void deleteEpisode(Long id);
+
+    void deleteEpisode(String link);
+
 }

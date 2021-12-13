@@ -1,6 +1,6 @@
 package io.skai.okta.internshipstreamingserviceparserxml.controllers;
 
-import io.skai.okta.internshipstreamingserviceparserxml.dto.RssItem;
+import io.skai.okta.internshipstreamingserviceparserxml.dto.Episode;
 import io.skai.okta.internshipstreamingserviceparserxml.services.LostFilmService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,33 +16,28 @@ public class ItemController {
     private final LostFilmService lostFilmService;
 
     @PostMapping("/new")
-    public void createItem(@RequestBody RssItem rssItem) {
-        lostFilmService.createItem(rssItem);
+    public void createEpisode(@RequestBody Episode episode) {
+        lostFilmService.createEpisode(episode);
     }
 
     @GetMapping()
-    public List<RssItem> getItems() {
-        return lostFilmService.getItems();
+    public List<Episode> getEpisodes() {
+        return lostFilmService.getEpisodes();
     }
 
     @GetMapping("/{id}")
-    public RssItem getItem(@PathVariable Long id) {
-        return lostFilmService.getItem(id);
+    public Episode getEpisode(@PathVariable Long id) {
+        return lostFilmService.getEpisode(id);
     }
 
-//    @GetMapping("/lostfilm")
-//    public List<RssItem> getItemsFromURL() {
-//        return lostFilmService.getNewItems();
-//    }
-
     @PostMapping("/{id}")
-    public void updateItem(@PathVariable Long id, @RequestBody RssItem rssItem) {
-        lostFilmService.update(id, rssItem);
+    public void updateEpisode(@PathVariable Long id, @RequestBody Episode episode) {
+        lostFilmService.updateEpisode(id, episode);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteItem(@PathVariable Long id) {
-        lostFilmService.delete(id);
+    public void deleteEpisode(@PathVariable Long id) {
+        lostFilmService.deleteEpisode(id);
     }
 
 }
