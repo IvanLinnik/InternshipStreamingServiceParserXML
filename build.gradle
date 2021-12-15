@@ -22,18 +22,18 @@ apply from: "${rootDir}/jooq.gradle"
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    compileOnly 'org.projectlombok:lombok'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-quartz'
+    implementation 'org.liquibase:liquibase-core'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-jooq'
+
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    compileOnly 'org.projectlombok:lombok'
+    runtimeOnly 'mysql:mysql-connector-java'
+
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.projectlombok:lombok'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-quartz'
-
-    implementation 'org.liquibase:liquibase-core'
-
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-jooq'
-    runtimeOnly 'mysql:mysql-connector-java'
 }
 
 test {

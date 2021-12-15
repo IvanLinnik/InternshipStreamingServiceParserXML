@@ -1,7 +1,7 @@
 package io.skai.okta.internshipstreamingserviceparserxml.services.impl;
 
-import io.skai.okta.internshipstreamingserviceparserxml.dto.Episode;
-import io.skai.okta.internshipstreamingserviceparserxml.services.LostFilmParser;
+import io.skai.okta.internshipstreamingserviceparserxml.dto.LostFilmRssItem;
+import io.skai.okta.internshipstreamingserviceparserxml.services.DataParser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,22 +25,22 @@ import java.util.stream.IntStream;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-class LostFilmParserXml implements LostFilmParser {
+class XmlParserLostFilm implements DataParser {
     @Value("${lostfilm.rss.url}")
     private final String url;
 
     @Value("${lostfilm.rss.tag}")
     private final String lostFilmRssTag;
 
-    public List<Episode> getItemList() {
+    @Override
+    public List<LostFilmRssItem> getNewItems() {
         Document document = getDocument();
         NodeList nodeList = document.getElementsByTagName(lostFilmRssTag);
 
-        return IntStream
-                .range(0, nodeList.getLength()).mapToObj(nodeList::item)
-                .filter(node -> node.getNodeType() == Node.ELEMENT_NODE)
-                .map(this::getItem)
-                .collect(Collectors.toList());
+        return IntStream.range(0, nodeList.getLength()).mapToObj(nodeList::item)
+                        .filter(node -> node.getNodeType() == Node.ELEMENT_NODE)
+                        .map(this::getItem)
+                        .collect(Collectors.toList());
     }
 
     private Document getDocument() {
@@ -62,7 +62,7 @@ class LostFilmParserXml implements LostFilmParser {
         return document;
     }
 
-    private Episode getItem(Node node) {
+    private LostFilmRssItem getItem(Node node) {
         Element element = (Element) node;
 
         String title = getTagValue("title", element);
@@ -71,12 +71,12 @@ class LostFilmParserXml implements LostFilmParser {
                 DateTimeFormatter.ofPattern("E, d MMM yyyy HH:mm:ss Z"));
         String link = getTagValue("link", element);
 
-        return Episode.builder()
-                      .title(title)
-                      .description(description)
-                      .pubDate(pubDate)
-                      .link(link)
-                      .build();
+        return LostFilmRssItem.builder()
+                              .title(title)
+                              .description(description)
+                              .pubDate(pubDate)
+                              .link(link)
+                              .build();
     }
 
     private String getTagValue(String tag, Element element) {

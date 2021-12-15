@@ -1,8 +1,8 @@
-package io.skai.okta.internshipstreamingserviceparserxml.repository;
+package io.skai.okta.internshipstreamingserviceparserxml.repository.impl;
 
 import io.skai.okta.internshipstreamingserviceparserxml.dto.Episode;
 import io.skai.okta.internshipstreamingserviceparserxml.jooq.generated.tables.records.EpisodesRecord;
-import io.skai.okta.internshipstreamingserviceparserxml.services.EpisodesConverter;
+import io.skai.okta.internshipstreamingserviceparserxml.repository.VideoRepository;
 import lombok.RequiredArgsConstructor;
 import org.jooq.DSLContext;
 import org.jooq.RecordMapper;
@@ -11,26 +11,25 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
-import static io.skai.okta.internshipstreamingserviceparserxml.jooq.generated.tables.Episodes.EPISODES;
+import static io.skai.okta.internshipstreamingserviceparserxml.jooq.generated.Tables.EPISODES;
 
 @Repository
 @RequiredArgsConstructor
-public class EpisodeRepositoryImpl implements EpisodeRepository {
+public class EpisodeRepository implements VideoRepository {
     private final DSLContext dslContext;
-    private final EpisodesConverter episodesConverter;
 
     @Override
-    public void create(Episode episode) {
+    public void saveOrUpdate(Episode episode) {
         if (getId(episode.getLink()).isEmpty()) {
             dslContext.insertInto(EPISODES,
                               EPISODES.TITLE,
                               EPISODES.DESCRIPTION,
                               EPISODES.PUBDATE,
                               EPISODES.LINK)
-                      .values(episodesConverter.getTitle(episode),
-                              episodesConverter.getDescription(episode),
-                              episodesConverter.getPubDate(episode),
-                              episodesConverter.getLink(episode))
+                      .values(episode.getTitle(),
+                              episode.getDescription(),
+                              episode.getPubDate(),
+                              episode.getLink())
                       .execute();
         } else {
             update(episode);
@@ -38,22 +37,14 @@ public class EpisodeRepositoryImpl implements EpisodeRepository {
     }
 
     @Override
-    public List<Episode> getItems() {
+    public List<Episode> getAll() {
         return dslContext
                 .selectFrom(EPISODES)
                 .fetch(getEpisodeRecordMapper());
     }
 
     @Override
-    public Episode getItem(long id) {
-        return dslContext
-                .selectFrom(EPISODES)
-                .where(EPISODES.ID.eq(id))
-                .fetchSingle(getEpisodeRecordMapper());
-    }
-
-    @Override
-    public Episode getItem(String link) {
+    public Episode get(String link) {
         return dslContext
                 .selectFrom(EPISODES)
                 .where(EPISODES.LINK.eq(link))
@@ -63,24 +54,10 @@ public class EpisodeRepositoryImpl implements EpisodeRepository {
     @Override
     public void update(Episode episode) {
         dslContext.update(EPISODES)
-                  .set(EPISODES.TITLE, episodesConverter.getTitle(episode))
-                  .set(EPISODES.DESCRIPTION, episodesConverter.getDescription(episode))
-                  .set(EPISODES.PUBDATE, episodesConverter.getPubDate(episode))
-                  .where(EPISODES.LINK.eq(episodesConverter.getLink(episode)))
-                  .execute();
-    }
-
-    @Override
-    public void delete(long id) {
-        dslContext.deleteFrom(EPISODES)
-                  .where(EPISODES.ID.eq(id))
-                  .execute();
-    }
-
-    @Override
-    public void delete(String link) {
-        dslContext.deleteFrom(EPISODES)
-                  .where(EPISODES.LINK.eq(link))
+                  .set(EPISODES.TITLE, episode.getTitle())
+                  .set(EPISODES.DESCRIPTION, episode.getDescription())
+                  .set(EPISODES.PUBDATE, episode.getPubDate())
+                  .where(EPISODES.LINK.eq(episode.getLink()))
                   .execute();
     }
 
@@ -99,5 +76,27 @@ public class EpisodeRepositoryImpl implements EpisodeRepository {
                                 .link(record.getLink())
                                 .build();
     }
+
+//    @Override
+//    public void delete(long id) {
+//        dslContext.deleteFrom(EPISODES)
+//                  .where(EPISODES.ID.eq(id))
+//                  .execute();
+//    }
+
+//    @Override
+//    public void delete(String link) {
+//        dslContext.deleteFrom(EPISODES)
+//                  .where(EPISODES.LINK.eq(link))
+//                  .execute();
+//    }
+
+//    @Override
+//    public Episode get(long id) {
+//        return dslContext
+//                .selectFrom(EPISODES)
+//                .where(EPISODES.ID.eq(id))
+//                .fetchSingle(getEpisodeRecordMapper());
+//    }
 
 }

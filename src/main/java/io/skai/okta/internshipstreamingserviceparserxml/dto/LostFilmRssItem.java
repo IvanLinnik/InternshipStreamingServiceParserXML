@@ -8,14 +8,7 @@ import java.time.LocalDateTime;
 
 @Value
 @Builder
-public class Episode {
-
-    long id;
-    int season;
-    int episodeNumber;
-    double imdbRating;
-
-    String tvSeriesTitle;
+public class LostFilmRssItem {
 
     @NonNull
     String title;

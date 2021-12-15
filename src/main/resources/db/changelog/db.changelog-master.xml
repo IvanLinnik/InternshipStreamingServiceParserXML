@@ -16,4 +16,15 @@
         </createTable>
     </changeSet>
 
+<!--    <changeSet author="Linnik Ivan" id="01122021">-->
+<!--        <createTable tableName="movies">-->
+<!--            <column autoIncrement="true" name="id" type="BIGINT">-->
+<!--                <constraints primaryKey="true"/>-->
+<!--            </column>-->
+<!--            <column name="imdbId" type="VARCHAR(255)"/>-->
+<!--            <column name="title" type="VARCHAR(255)"/>-->
+<!--            <column name="year" type="INTEGER"/>-->
+<!--        </createTable>-->
+<!--    </changeSet>-->
+
 </databaseChangeLog>
