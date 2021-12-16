@@ -28,7 +28,7 @@ import java.time.LocalDateTime;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class EpisodesRecord extends UpdatableRecordImpl<EpisodesRecord> implements Record8<Long, String, String, LocalDateTime, String, Integer, Integer, String> {
 
-    private static final long serialVersionUID = 1051946284;
+    private static final long serialVersionUID = -247333746;
 
     /**
      * Setter for <code>episodes.id</code>.
@@ -73,16 +73,16 @@ public class EpisodesRecord extends UpdatableRecordImpl<EpisodesRecord> implemen
     }
 
     /**
-     * Setter for <code>episodes.pubDate</code>.
+     * Setter for <code>episodes.pub_date</code>.
      */
-    public void setPubdate(LocalDateTime value) {
+    public void setPubDate(LocalDateTime value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>episodes.pubDate</code>.
+     * Getter for <code>episodes.pub_date</code>.
      */
-    public LocalDateTime getPubdate() {
+    public LocalDateTime getPubDate() {
         return (LocalDateTime) get(3);
     }
 
@@ -115,30 +115,30 @@ public class EpisodesRecord extends UpdatableRecordImpl<EpisodesRecord> implemen
     }
 
     /**
-     * Setter for <code>episodes.episodeNumber</code>.
+     * Setter for <code>episodes.episode_number</code>.
      */
-    public void setEpisodenumber(Integer value) {
+    public void setEpisodeNumber(Integer value) {
         set(6, value);
     }
 
     /**
-     * Getter for <code>episodes.episodeNumber</code>.
+     * Getter for <code>episodes.episode_number</code>.
      */
-    public Integer getEpisodenumber() {
+    public Integer getEpisodeNumber() {
         return (Integer) get(6);
     }
 
     /**
-     * Setter for <code>episodes.tvSeriesTitle</code>.
+     * Setter for <code>episodes.tv_series_title</code>.
      */
-    public void setTvseriestitle(String value) {
+    public void setTvSeriesTitle(String value) {
         set(7, value);
     }
 
     /**
-     * Getter for <code>episodes.tvSeriesTitle</code>.
+     * Getter for <code>episodes.tv_series_title</code>.
      */
-    public String getTvseriestitle() {
+    public String getTvSeriesTitle() {
         return (String) get(7);
     }
 
@@ -203,7 +203,7 @@ public class EpisodesRecord extends UpdatableRecordImpl<EpisodesRecord> implemen
      */
     @Override
     public Field<LocalDateTime> field4() {
-        return Episodes.EPISODES.PUBDATE;
+        return Episodes.EPISODES.PUB_DATE;
     }
 
     /**
@@ -227,7 +227,7 @@ public class EpisodesRecord extends UpdatableRecordImpl<EpisodesRecord> implemen
      */
     @Override
     public Field<Integer> field7() {
-        return Episodes.EPISODES.EPISODENUMBER;
+        return Episodes.EPISODES.EPISODE_NUMBER;
     }
 
     /**
@@ -235,7 +235,7 @@ public class EpisodesRecord extends UpdatableRecordImpl<EpisodesRecord> implemen
      */
     @Override
     public Field<String> field8() {
-        return Episodes.EPISODES.TVSERIESTITLE;
+        return Episodes.EPISODES.TV_SERIES_TITLE;
     }
 
     /**
@@ -267,7 +267,7 @@ public class EpisodesRecord extends UpdatableRecordImpl<EpisodesRecord> implemen
      */
     @Override
     public LocalDateTime component4() {
-        return getPubdate();
+        return getPubDate();
     }
 
     /**
@@ -291,7 +291,7 @@ public class EpisodesRecord extends UpdatableRecordImpl<EpisodesRecord> implemen
      */
     @Override
     public Integer component7() {
-        return getEpisodenumber();
+        return getEpisodeNumber();
     }
 
     /**
@@ -299,7 +299,7 @@ public class EpisodesRecord extends UpdatableRecordImpl<EpisodesRecord> implemen
      */
     @Override
     public String component8() {
-        return getTvseriestitle();
+        return getTvSeriesTitle();
     }
 
     /**
@@ -331,7 +331,7 @@ public class EpisodesRecord extends UpdatableRecordImpl<EpisodesRecord> implemen
      */
     @Override
     public LocalDateTime value4() {
-        return getPubdate();
+        return getPubDate();
     }
 
     /**
@@ -355,7 +355,7 @@ public class EpisodesRecord extends UpdatableRecordImpl<EpisodesRecord> implemen
      */
     @Override
     public Integer value7() {
-        return getEpisodenumber();
+        return getEpisodeNumber();
     }
 
     /**
@@ -363,7 +363,7 @@ public class EpisodesRecord extends UpdatableRecordImpl<EpisodesRecord> implemen
      */
     @Override
     public String value8() {
-        return getTvseriestitle();
+        return getTvSeriesTitle();
     }
 
     /**
@@ -398,7 +398,7 @@ public class EpisodesRecord extends UpdatableRecordImpl<EpisodesRecord> implemen
      */
     @Override
     public EpisodesRecord value4(LocalDateTime value) {
-        setPubdate(value);
+        setPubDate(value);
         return this;
     }
 
@@ -425,7 +425,7 @@ public class EpisodesRecord extends UpdatableRecordImpl<EpisodesRecord> implemen
      */
     @Override
     public EpisodesRecord value7(Integer value) {
-        setEpisodenumber(value);
+        setEpisodeNumber(value);
         return this;
     }
 
@@ -434,7 +434,7 @@ public class EpisodesRecord extends UpdatableRecordImpl<EpisodesRecord> implemen
      */
     @Override
     public EpisodesRecord value8(String value) {
-        setTvseriestitle(value);
+        setTvSeriesTitle(value);
         return this;
     }
 
@@ -468,16 +468,16 @@ public class EpisodesRecord extends UpdatableRecordImpl<EpisodesRecord> implemen
     /**
      * Create a detached, initialised EpisodesRecord
      */
-    public EpisodesRecord(Long id, String title, String description, LocalDateTime pubdate, String link, Integer season, Integer episodenumber, String tvseriestitle) {
+    public EpisodesRecord(Long id, String title, String description, LocalDateTime pubDate, String link, Integer season, Integer episodeNumber, String tvSeriesTitle) {
         super(Episodes.EPISODES);
 
         set(0, id);
         set(1, title);
         set(2, description);
-        set(3, pubdate);
+        set(3, pubDate);
         set(4, link);
         set(5, season);
-        set(6, episodenumber);
-        set(7, tvseriestitle);
+        set(6, episodeNumber);
+        set(7, tvSeriesTitle);
     }
 }

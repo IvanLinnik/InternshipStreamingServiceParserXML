@@ -19,10 +19,4 @@ public interface VideoRepository {
 
     Optional<Long> getId(String link);
 
-//    Episode get(long id);
-
-//    void delete(long id);
-
-//    void delete(String link);
-
 }

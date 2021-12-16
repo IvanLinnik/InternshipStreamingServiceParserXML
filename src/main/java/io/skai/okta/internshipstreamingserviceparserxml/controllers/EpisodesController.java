@@ -28,19 +28,4 @@ public class EpisodesController {
         return videoService.get(link);
     }
 
-//    @PostMapping("/new")
-//    public void createEpisode(@RequestBody LostFilmRssItem lostFilmRssItem) {
-//        videoService.create(lostFilmRssItem);
-//    }
-
-//    @PostMapping("/{id}")
-//    public void updateEpisode(@PathVariable Long id, @RequestBody Episode episode) {
-//        videoService.update(id, episode);
-//    }
-
-//    @DeleteMapping("/{id}")
-//    public void deleteEpisode(@PathVariable Long id) {
-//        videoService.delete(id);
-//    }
-
 }

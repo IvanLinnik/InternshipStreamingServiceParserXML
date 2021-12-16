@@ -28,33 +28,4 @@ public class LostFilmService implements VideoService {
         return videoRepository.get(link);
     }
 
-//    @Override
-//    public void create(LostFilmRssItem lostFilmRssItem) {
-//        videoRepository.saveOrUpdate(lostFilmRssItem);
-//    }
-
-//    @Override
-//    public Episode get(Long id) {
-//        return videoRepository.get(id);
-//    }
-
-//    @Override
-//    public void update(Long id, Episode episode) {
-//        videoRepository.update(episode);
-//    }
-
-//    @Override
-//    public void delete(Long id) {
-//        videoRepository.delete(id);
-//    }
-
-//    @Override
-//    public void delete(String link) {
-//        videoRepository.delete(link);
-//    }
-
-//    private List<Video> getNewItems() {
-//        return dataParser.getVideosList();
-//    }
-
 }

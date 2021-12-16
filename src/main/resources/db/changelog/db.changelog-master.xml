@@ -24,22 +24,28 @@
         </addColumn>
     </changeSet>
 
+    <changeSet author="Linnik Ivan" id="episodesRenameColumns1">
+        <renameColumn tableName="episodes"
+                      oldColumnName="pubDate"
+                      newColumnName="pub_date"
+                      columnDataType="datetime"/>
+
+        <renameColumn tableName="episodes"
+                      oldColumnName="episodeNumber"
+                      newColumnName="episode_number"
+                      columnDataType="INTEGER"/>
+
+        <renameColumn tableName="episodes"
+                      oldColumnName="tvSeriesTitle"
+                      newColumnName="tv_series_title"
+                      columnDataType="VARCHAR(255)"/>
+    </changeSet>
+
     <!--    <changeSet author="Linnik Ivan" id="episodesAddColumns2">-->
     <!--        <addColumn tableName="episodes">-->
-    <!--            <column name="imDbId" type="VARCHAR(64)"/>-->
-    <!--            <column name="imDbRating" type="FLOAT"/>-->
+    <!--            <column name="imdb_id" type="VARCHAR(64)"/>-->
+    <!--            <column name="imdb_rating" type="FLOAT"/>-->
     <!--        </addColumn>-->
-    <!--    </changeSet>-->
-
-    <!--    <changeSet author="Linnik Ivan" id="01122021">-->
-    <!--        <createTable tableName="movies">-->
-    <!--            <column autoIncrement="true" name="id" type="BIGINT">-->
-    <!--                <constraints primaryKey="true"/>-->
-    <!--            </column>-->
-    <!--            <column name="imdbId" type="VARCHAR(255)"/>-->
-    <!--            <column name="title" type="VARCHAR(255)"/>-->
-    <!--            <column name="year" type="INTEGER"/>-->
-    <!--        </createTable>-->
     <!--    </changeSet>-->
 
 </databaseChangeLog>

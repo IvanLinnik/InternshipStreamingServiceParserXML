@@ -24,9 +24,9 @@ public class EpisodeRepository implements VideoRepository {
     public void saveOrUpdate(Episode episode) {
         if (isPresent(episode)) {
             update(episode);
-        } else {
-            save(episode);
+            return;
         }
+        save(episode);
     }
 
     private boolean isPresent(Episode episode) {
@@ -37,11 +37,11 @@ public class EpisodeRepository implements VideoRepository {
     public void save(Episode episode) {
         dslContext.insertInto(EPISODES,
                           EPISODES.SEASON,
-                          EPISODES.EPISODENUMBER,
-                          EPISODES.TVSERIESTITLE,
+                          EPISODES.EPISODE_NUMBER,
+                          EPISODES.TV_SERIES_TITLE,
                           EPISODES.TITLE,
                           EPISODES.DESCRIPTION,
-                          EPISODES.PUBDATE,
+                          EPISODES.PUB_DATE,
                           EPISODES.LINK)
                   .values(episode.getSeason(),
                           episode.getEpisodeNumber(),
@@ -72,11 +72,11 @@ public class EpisodeRepository implements VideoRepository {
     public void update(Episode episode) {
         dslContext.update(EPISODES)
                   .set(EPISODES.SEASON, episode.getSeason())
-                  .set(EPISODES.EPISODENUMBER, episode.getEpisodeNumber())
-                  .set(EPISODES.TVSERIESTITLE, episode.getTvSeriesTitle())
+                  .set(EPISODES.EPISODE_NUMBER, episode.getEpisodeNumber())
+                  .set(EPISODES.TV_SERIES_TITLE, episode.getTvSeriesTitle())
                   .set(EPISODES.TITLE, episode.getTitle())
                   .set(EPISODES.DESCRIPTION, episode.getDescription())
-                  .set(EPISODES.PUBDATE, episode.getPubDate())
+                  .set(EPISODES.PUB_DATE, episode.getPubDate())
                   .where(EPISODES.LINK.eq(episode.getLink()))
                   .execute();
     }
@@ -90,33 +90,15 @@ public class EpisodeRepository implements VideoRepository {
 
     private RecordMapper<EpisodesRecord, Episode> getEpisodeRecordMapper() {
         return record -> Episode.builder()
+                                .id(record.getId())
+                                .season(record.getSeason())
+                                .episodeNumber(record.getEpisodeNumber())
+                                .tvSeriesTitle(record.getTvSeriesTitle())
                                 .title(record.getTitle())
                                 .description(record.getDescription())
-                                .pubDate(record.getPubdate())
+                                .pubDate(record.getPubDate())
                                 .link(record.getLink())
                                 .build();
     }
-
-//    @Override
-//    public void delete(long id) {
-//        dslContext.deleteFrom(EPISODES)
-//                  .where(EPISODES.ID.eq(id))
-//                  .execute();
-//    }
-
-//    @Override
-//    public void delete(String link) {
-//        dslContext.deleteFrom(EPISODES)
-//                  .where(EPISODES.LINK.eq(link))
-//                  .execute();
-//    }
-
-//    @Override
-//    public Episode get(long id) {
-//        return dslContext
-//                .selectFrom(EPISODES)
-//                .where(EPISODES.ID.eq(id))
-//                .fetchSingle(getEpisodeRecordMapper());
-//    }
 
 }

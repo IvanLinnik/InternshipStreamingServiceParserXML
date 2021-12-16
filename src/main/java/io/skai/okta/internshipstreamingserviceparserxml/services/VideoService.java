@@ -12,12 +12,4 @@ public interface VideoService {
 
     Episode get(String link);
 
-//    void create(LostFilmRssItem lostFilmRssItem);
-
-//    Episode get(Long id);
-
-//    void update(Long id, Video video);
-
-//    void delete(Long id);
-
 }
