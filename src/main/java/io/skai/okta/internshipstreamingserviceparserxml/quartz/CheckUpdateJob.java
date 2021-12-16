@@ -2,7 +2,7 @@ package io.skai.okta.internshipstreamingserviceparserxml.quartz;
 
 import io.skai.okta.internshipstreamingserviceparserxml.services.DataParser;
 import io.skai.okta.internshipstreamingserviceparserxml.services.VideoService;
-import io.skai.okta.internshipstreamingserviceparserxml.services.impl.EpisodesMapper;
+import io.skai.okta.internshipstreamingserviceparserxml.services.mapper.EpisodesMapper;
 import lombok.RequiredArgsConstructor;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;

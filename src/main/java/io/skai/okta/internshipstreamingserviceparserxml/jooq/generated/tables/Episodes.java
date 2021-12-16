@@ -30,7 +30,7 @@ import java.util.List;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Episodes extends TableImpl<EpisodesRecord> {
 
-    private static final long serialVersionUID = -1317799962;
+    private static final long serialVersionUID = -850011145;
 
     /**
      * The reference instance of <code>episodes</code>
@@ -69,6 +69,21 @@ public class Episodes extends TableImpl<EpisodesRecord> {
      * The column <code>episodes.link</code>.
      */
     public final TableField<EpisodesRecord, String> LINK = createField("link", org.jooq.impl.SQLDataType.VARCHAR(255), this, "");
+
+    /**
+     * The column <code>episodes.season</code>.
+     */
+    public final TableField<EpisodesRecord, Integer> SEASON = createField("season", org.jooq.impl.SQLDataType.INTEGER, this, "");
+
+    /**
+     * The column <code>episodes.episodeNumber</code>.
+     */
+    public final TableField<EpisodesRecord, Integer> EPISODENUMBER = createField("episodeNumber", org.jooq.impl.SQLDataType.INTEGER, this, "");
+
+    /**
+     * The column <code>episodes.tvSeriesTitle</code>.
+     */
+    public final TableField<EpisodesRecord, String> TVSERIESTITLE = createField("tvSeriesTitle", org.jooq.impl.SQLDataType.VARCHAR(255), this, "");
 
     /**
      * Create a <code>episodes</code> table reference

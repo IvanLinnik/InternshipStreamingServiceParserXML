@@ -23,10 +23,8 @@ public class EpisodeRepository implements VideoRepository {
     @Override
     public void saveOrUpdate(Episode episode) {
         if (isPresent(episode)) {
-            log.info("update");
             update(episode);
         } else {
-            log.info("save");
             save(episode);
         }
     }
@@ -38,11 +36,17 @@ public class EpisodeRepository implements VideoRepository {
     @Override
     public void save(Episode episode) {
         dslContext.insertInto(EPISODES,
+                          EPISODES.SEASON,
+                          EPISODES.EPISODENUMBER,
+                          EPISODES.TVSERIESTITLE,
                           EPISODES.TITLE,
                           EPISODES.DESCRIPTION,
                           EPISODES.PUBDATE,
                           EPISODES.LINK)
-                  .values(episode.getTitle(),
+                  .values(episode.getSeason(),
+                          episode.getEpisodeNumber(),
+                          episode.getTvSeriesTitle(),
+                          episode.getTitle(),
                           episode.getDescription(),
                           episode.getPubDate(),
                           episode.getLink())
@@ -67,6 +71,9 @@ public class EpisodeRepository implements VideoRepository {
     @Override
     public void update(Episode episode) {
         dslContext.update(EPISODES)
+                  .set(EPISODES.SEASON, episode.getSeason())
+                  .set(EPISODES.EPISODENUMBER, episode.getEpisodeNumber())
+                  .set(EPISODES.TVSERIESTITLE, episode.getTvSeriesTitle())
                   .set(EPISODES.TITLE, episode.getTitle())
                   .set(EPISODES.DESCRIPTION, episode.getDescription())
                   .set(EPISODES.PUBDATE, episode.getPubDate())
