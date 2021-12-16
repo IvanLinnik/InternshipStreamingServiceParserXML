@@ -4,6 +4,7 @@ import io.skai.okta.internshipstreamingserviceparserxml.dto.Episode;
 import io.skai.okta.internshipstreamingserviceparserxml.jooq.generated.tables.records.EpisodesRecord;
 import io.skai.okta.internshipstreamingserviceparserxml.repository.VideoRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.jooq.DSLContext;
 import org.jooq.RecordMapper;
 import org.springframework.stereotype.Repository;
@@ -15,25 +16,37 @@ import static io.skai.okta.internshipstreamingserviceparserxml.jooq.generated.Ta
 
 @Repository
 @RequiredArgsConstructor
+@Slf4j
 public class EpisodeRepository implements VideoRepository {
     private final DSLContext dslContext;
 
     @Override
     public void saveOrUpdate(Episode episode) {
-        if (getId(episode.getLink()).isEmpty()) {
-            dslContext.insertInto(EPISODES,
-                              EPISODES.TITLE,
-                              EPISODES.DESCRIPTION,
-                              EPISODES.PUBDATE,
-                              EPISODES.LINK)
-                      .values(episode.getTitle(),
-                              episode.getDescription(),
-                              episode.getPubDate(),
-                              episode.getLink())
-                      .execute();
-        } else {
+        if (isPresent(episode)) {
+            log.info("update");
             update(episode);
+        } else {
+            log.info("save");
+            save(episode);
         }
+    }
+
+    private boolean isPresent(Episode episode) {
+        return getId(episode.getLink()).isPresent();
+    }
+
+    @Override
+    public void save(Episode episode) {
+        dslContext.insertInto(EPISODES,
+                          EPISODES.TITLE,
+                          EPISODES.DESCRIPTION,
+                          EPISODES.PUBDATE,
+                          EPISODES.LINK)
+                  .values(episode.getTitle(),
+                          episode.getDescription(),
+                          episode.getPubDate(),
+                          episode.getLink())
+                  .execute();
     }
 
     @Override

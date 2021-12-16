@@ -4,7 +4,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-    <changeSet author="Linnik Ivan" id="01122021">
+    <changeSet author="Linnik Ivan" id="01122021episodes">
         <createTable tableName="episodes">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints primaryKey="true"/>
@@ -16,15 +16,30 @@
         </createTable>
     </changeSet>
 
-<!--    <changeSet author="Linnik Ivan" id="01122021">-->
-<!--        <createTable tableName="movies">-->
-<!--            <column autoIncrement="true" name="id" type="BIGINT">-->
-<!--                <constraints primaryKey="true"/>-->
-<!--            </column>-->
-<!--            <column name="imdbId" type="VARCHAR(255)"/>-->
-<!--            <column name="title" type="VARCHAR(255)"/>-->
-<!--            <column name="year" type="INTEGER"/>-->
-<!--        </createTable>-->
-<!--    </changeSet>-->
+    <changeSet author="Linnik Ivan" id="episodesAddColumns1">
+        <addColumn tableName="episodes">
+            <column name="season" type="INTEGER"/>
+            <column name="episodeNumber" type="INTEGER"/>
+            <column name="tvSeriesTitle" type="VARCHAR(255)"/>
+        </addColumn>
+    </changeSet>
+
+    <!--    <changeSet author="Linnik Ivan" id="episodesAddColumns2">-->
+    <!--        <addColumn tableName="episodes">-->
+    <!--            <column name="imDbId" type="VARCHAR(64)"/>-->
+    <!--            <column name="imDbRating" type="FLOAT"/>-->
+    <!--        </addColumn>-->
+    <!--    </changeSet>-->
+
+    <!--    <changeSet author="Linnik Ivan" id="01122021">-->
+    <!--        <createTable tableName="movies">-->
+    <!--            <column autoIncrement="true" name="id" type="BIGINT">-->
+    <!--                <constraints primaryKey="true"/>-->
+    <!--            </column>-->
+    <!--            <column name="imdbId" type="VARCHAR(255)"/>-->
+    <!--            <column name="title" type="VARCHAR(255)"/>-->
+    <!--            <column name="year" type="INTEGER"/>-->
+    <!--        </createTable>-->
+    <!--    </changeSet>-->
 
 </databaseChangeLog>

@@ -18,11 +18,6 @@ import java.util.List;
 public class EpisodesController {
     private final VideoService videoService;
 
-//    @PostMapping("/new")
-//    public void createEpisode(@RequestBody LostFilmRssItem lostFilmRssItem) {
-//        videoService.create(lostFilmRssItem);
-//    }
-
     @GetMapping()
     public List<Episode> getEpisodes() {
         return videoService.getAll();
@@ -32,6 +27,11 @@ public class EpisodesController {
     public Episode getEpisode(@PathVariable String link) {
         return videoService.get(link);
     }
+
+//    @PostMapping("/new")
+//    public void createEpisode(@RequestBody LostFilmRssItem lostFilmRssItem) {
+//        videoService.create(lostFilmRssItem);
+//    }
 
 //    @PostMapping("/{id}")
 //    public void updateEpisode(@PathVariable Long id, @RequestBody Episode episode) {

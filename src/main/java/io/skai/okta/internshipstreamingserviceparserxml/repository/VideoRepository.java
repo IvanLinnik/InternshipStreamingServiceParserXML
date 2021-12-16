@@ -9,6 +9,8 @@ public interface VideoRepository {
 
     void saveOrUpdate(Episode episode);
 
+    void save(Episode episode);
+
     List<Episode> getAll();
 
     Episode get(String link);

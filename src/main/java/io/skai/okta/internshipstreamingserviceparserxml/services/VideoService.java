@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface VideoService {
 
-    void saveNewVideos();
+    void saveEpisode(Episode episode);
 
     List<Episode> getAll();
 

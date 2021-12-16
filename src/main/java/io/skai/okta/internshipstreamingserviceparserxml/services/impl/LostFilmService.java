@@ -2,29 +2,20 @@ package io.skai.okta.internshipstreamingserviceparserxml.services.impl;
 
 import io.skai.okta.internshipstreamingserviceparserxml.dto.Episode;
 import io.skai.okta.internshipstreamingserviceparserxml.repository.VideoRepository;
-import io.skai.okta.internshipstreamingserviceparserxml.services.DataParser;
 import io.skai.okta.internshipstreamingserviceparserxml.services.VideoService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class LostFilmService implements VideoService {
     private final VideoRepository videoRepository;
-    private final DataParser dataParser;
-    private final EpisodesMapper episodesMapper;
 
     @Override
-    public void saveNewVideos() {
-        log.info("saving new videos... be careful...");
-        dataParser.getNewItems()
-                  .stream()
-                  .map(episodesMapper::map)
-                  .forEach(videoRepository::saveOrUpdate);
+    public void saveEpisode(Episode episode) {
+        videoRepository.saveOrUpdate(episode);
     }
 
     @Override
