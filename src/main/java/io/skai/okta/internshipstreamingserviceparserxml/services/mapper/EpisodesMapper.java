@@ -4,13 +4,8 @@ import io.skai.okta.internshipstreamingserviceparserxml.dto.Episode;
 import io.skai.okta.internshipstreamingserviceparserxml.dto.LostFilmRssItem;
 import org.springframework.stereotype.Component;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 @Component
 public class EpisodesMapper {
-    private final Pattern TITLE_PATTERN = Pattern.compile("\\((.*?)\\)");
-
     public Episode map(LostFilmRssItem lostFilmRssItem) {
         String title = lostFilmRssItem.getTitle();
         int season = Integer.parseInt(extract(title, "season"));
@@ -29,20 +24,14 @@ public class EpisodesMapper {
     }
 
     private String extract(String from, String value) {
-        Matcher matcher = TITLE_PATTERN.matcher(from);
-
+        final String[] result = from.replaceAll("\\(", ")").split("\\)");
         switch (value) {
-            case "season":
-                matcher.find();
-                matcher.find();
-                return matcher.group(1).substring(1, 3);
-            case "episode":
-                matcher.find();
-                matcher.find();
-                return matcher.group(1).substring(4, 6);
             case "tvsTitle":
-                matcher.find();
-                return matcher.group(1);
+                return result[1];
+            case "season":
+                return result[3].substring(1, 3);
+            case "episode":
+                return result[3].substring(4, 6);
             default:
                 throw new IllegalStateException("Unexpected value: " + value);
         }
