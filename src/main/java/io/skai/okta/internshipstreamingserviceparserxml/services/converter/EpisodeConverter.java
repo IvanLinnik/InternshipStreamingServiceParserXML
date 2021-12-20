@@ -11,8 +11,8 @@ import java.util.regex.Pattern;
 @Component
 public class EpisodeConverter {
     private final static Pattern TVS_TITLE_PATTERN = Pattern.compile("(?<=\\().+?(?=\\))");
-    private final static Pattern SEASON_PATTERN = Pattern.compile("(?<=\\(S)\\d{2}(?=E\\d{2})");
-    private final static Pattern EPISODE_PATTERN = Pattern.compile("(?<=\\(S\\d{2}E)\\d{2}(?=\\))");
+    private final static Pattern SEASON_NUMBER_PATTERN = Pattern.compile("(?<=\\(S)\\d{2}(?=E\\d{2})");
+    private final static Pattern EPISODE_NUMBER_PATTERN = Pattern.compile("(?<=\\(S\\d{2}E)\\d{2}(?=\\))");
 
     public Episode map(LostFilmRssItem lostFilmRssItem) {
         String title = lostFilmRssItem.getTitle();
@@ -35,34 +35,18 @@ public class EpisodeConverter {
     private String extract(String from, EpisodeField field) {
         switch (field) {
             case TV_SERIES_TITLE:
-                return extractTvsTitle(from);
+                return extractField(from, TVS_TITLE_PATTERN);
             case SEASON_NUMBER:
-                return extractSeason(from);
+                return extractField(from, SEASON_NUMBER_PATTERN);
             case EPISODE_NUMBER:
-                return extractEpisode(from);
+                return extractField(from, EPISODE_NUMBER_PATTERN);
             default:
                 throw new IllegalStateException("Unexpected field: " + field);
         }
     }
 
-    private String extractTvsTitle(String from) {
-        Matcher matcher = TVS_TITLE_PATTERN.matcher(from);
-        if (matcher.find()) {
-            return matcher.group(0);
-        }
-        throw new InvalidParameterException("Format of \"title\" string is illegal");
-    }
-
-    private String extractSeason(String from) {
-        Matcher matcher = SEASON_PATTERN.matcher(from);
-        if (matcher.find()) {
-            return matcher.group(0);
-        }
-        throw new InvalidParameterException("Format of \"title\" string is illegal");
-    }
-
-    private String extractEpisode(String from) {
-        Matcher matcher = EPISODE_PATTERN.matcher(from);
+    private String extractField(String from, Pattern pattern) {
+        Matcher matcher = pattern.matcher(from);
         if (matcher.find()) {
             return matcher.group(0);
         }
