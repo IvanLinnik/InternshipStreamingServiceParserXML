@@ -17,12 +17,12 @@ public class EpisodeConverter {
     public Episode map(LostFilmRssItem lostFilmRssItem) {
         String title = lostFilmRssItem.getTitle();
 
-        String tvSeriesTitle = extract(title, "tvsTitle");
-        int season = Integer.parseInt(extract(title, "season"));
-        int episodeNumber = Integer.parseInt(extract(title, "episode"));
+        String tvSeriesTitle = extract(title, EpisodeField.TV_SERIES_TITLE);
+        int seasonNumber = Integer.parseInt(extract(title, EpisodeField.SEASON_NUMBER));
+        int episodeNumber = Integer.parseInt(extract(title, EpisodeField.EPISODE_NUMBER));
 
         return Episode.builder()
-                      .season(season)
+                      .season(seasonNumber)
                       .episodeNumber(episodeNumber)
                       .tvSeriesTitle(tvSeriesTitle)
                       .title(title)
@@ -32,16 +32,16 @@ public class EpisodeConverter {
                       .build();
     }
 
-    private String extract(String from, String value) {
-        switch (value) {
-            case "tvsTitle":
+    private String extract(String from, EpisodeField field) {
+        switch (field) {
+            case TV_SERIES_TITLE:
                 return extractTvsTitle(from);
-            case "season":
+            case SEASON_NUMBER:
                 return extractSeason(from);
-            case "episode":
+            case EPISODE_NUMBER:
                 return extractEpisode(from);
             default:
-                throw new IllegalStateException("Unexpected value: " + value);
+                throw new IllegalStateException("Unexpected field: " + field);
         }
     }
 
@@ -67,6 +67,12 @@ public class EpisodeConverter {
             return matcher.group(0);
         }
         throw new InvalidParameterException("Format of \"title\" string is illegal");
+    }
+
+    private enum EpisodeField {
+        TV_SERIES_TITLE,
+        SEASON_NUMBER,
+        EPISODE_NUMBER
     }
 
 }
