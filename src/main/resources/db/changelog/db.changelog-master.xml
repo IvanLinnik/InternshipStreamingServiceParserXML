@@ -4,7 +4,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-    <changeSet author="Linnik Ivan" id="01122021">
+    <changeSet author="Linnik Ivan" id="01122021episodes">
         <createTable tableName="episodes">
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints primaryKey="true"/>
@@ -15,5 +15,40 @@
             <column name="link" type="VARCHAR(255)"/>
         </createTable>
     </changeSet>
+
+    <changeSet author="Linnik Ivan" id="episodesAddColumns1">
+        <addColumn tableName="episodes">
+            <column name="season" type="INTEGER"/>
+            <column name="episodeNumber" type="INTEGER"/>
+            <column name="tvSeriesTitle" type="VARCHAR(255)"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet author="Linnik Ivan" id="episodesRenameColumns1">
+        <renameColumn tableName="episodes"
+                      oldColumnName="pubDate"
+                      newColumnName="pub_date"
+                      columnDataType="datetime"/>
+
+        <renameColumn tableName="episodes"
+                      oldColumnName="episodeNumber"
+                      newColumnName="episode_number"
+                      columnDataType="INTEGER"/>
+
+        <renameColumn tableName="episodes"
+                      oldColumnName="tvSeriesTitle"
+                      newColumnName="tv_series_title"
+                      columnDataType="VARCHAR(255)"/>
+    </changeSet>
+
+<!--    <changeSet author="Linnik Ivan" id="01122021episodes_additional_data">-->
+<!--        <createTable tableName="episodes_additional_data">-->
+<!--            <column name="id" type="BIGINT">-->
+<!--                <constraints primaryKey="true"/>-->
+<!--            </column>-->
+<!--            <column name="imdb_id" type="VARCHAR(64)"/>-->
+<!--            <column name="imdb_rating" type="FLOAT"/>-->
+<!--        </createTable>-->
+<!--    </changeSet>-->
 
 </databaseChangeLog>

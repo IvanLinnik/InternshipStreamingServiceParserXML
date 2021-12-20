@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class InternshipStreamingServiceParserXmlApplication {
+public class InternshipParserApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(InternshipStreamingServiceParserXmlApplication.class, args);
+        SpringApplication.run(InternshipParserApplication.class, args);
     }
 
 }

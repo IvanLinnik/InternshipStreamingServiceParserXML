@@ -30,7 +30,7 @@ import java.util.List;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Episodes extends TableImpl<EpisodesRecord> {
 
-    private static final long serialVersionUID = -1317799962;
+    private static final long serialVersionUID = -588913423;
 
     /**
      * The reference instance of <code>episodes</code>
@@ -61,14 +61,29 @@ public class Episodes extends TableImpl<EpisodesRecord> {
     public final TableField<EpisodesRecord, String> DESCRIPTION = createField("description", org.jooq.impl.SQLDataType.VARCHAR(255), this, "");
 
     /**
-     * The column <code>episodes.pubDate</code>.
+     * The column <code>episodes.pub_date</code>.
      */
-    public final TableField<EpisodesRecord, LocalDateTime> PUBDATE = createField("pubDate", org.jooq.impl.SQLDataType.LOCALDATETIME, this, "");
+    public final TableField<EpisodesRecord, LocalDateTime> PUB_DATE = createField("pub_date", org.jooq.impl.SQLDataType.LOCALDATETIME, this, "");
 
     /**
      * The column <code>episodes.link</code>.
      */
     public final TableField<EpisodesRecord, String> LINK = createField("link", org.jooq.impl.SQLDataType.VARCHAR(255), this, "");
+
+    /**
+     * The column <code>episodes.season</code>.
+     */
+    public final TableField<EpisodesRecord, Integer> SEASON = createField("season", org.jooq.impl.SQLDataType.INTEGER, this, "");
+
+    /**
+     * The column <code>episodes.episode_number</code>.
+     */
+    public final TableField<EpisodesRecord, Integer> EPISODE_NUMBER = createField("episode_number", org.jooq.impl.SQLDataType.INTEGER, this, "");
+
+    /**
+     * The column <code>episodes.tv_series_title</code>.
+     */
+    public final TableField<EpisodesRecord, String> TV_SERIES_TITLE = createField("tv_series_title", org.jooq.impl.SQLDataType.VARCHAR(255), this, "");
 
     /**
      * Create a <code>episodes</code> table reference
