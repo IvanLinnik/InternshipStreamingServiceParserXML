@@ -15,48 +15,29 @@ public class EpisodeConverter {
     private final static Pattern EPISODE_NUMBER_PATTERN = Pattern.compile("(?<=\\(S\\d{2}E)\\d{2}(?=\\))");
 
     public Episode map(LostFilmRssItem lostFilmRssItem) {
-        String title = lostFilmRssItem.getTitle();
+        String episodeTitle = lostFilmRssItem.getTitle();
 
-        String tvSeriesTitle = extract(title, EpisodeField.TV_SERIES_TITLE);
-        int seasonNumber = Integer.parseInt(extract(title, EpisodeField.SEASON_NUMBER));
-        int episodeNumber = Integer.parseInt(extract(title, EpisodeField.EPISODE_NUMBER));
+        String tvSeriesTitle = extractFieldFrom(episodeTitle, TVS_TITLE_PATTERN);
+        int seasonNumber = Integer.parseInt(extractFieldFrom(episodeTitle, SEASON_NUMBER_PATTERN));
+        int episodeNumber = Integer.parseInt(extractFieldFrom(episodeTitle, EPISODE_NUMBER_PATTERN));
 
         return Episode.builder()
                       .season(seasonNumber)
                       .episodeNumber(episodeNumber)
                       .tvSeriesTitle(tvSeriesTitle)
-                      .title(title)
+                      .title(episodeTitle)
                       .description(lostFilmRssItem.getDescription())
                       .pubDate(lostFilmRssItem.getPubDate())
                       .link(lostFilmRssItem.getLink())
                       .build();
     }
 
-    private String extract(String from, EpisodeField field) {
-        switch (field) {
-            case TV_SERIES_TITLE:
-                return extractField(from, TVS_TITLE_PATTERN);
-            case SEASON_NUMBER:
-                return extractField(from, SEASON_NUMBER_PATTERN);
-            case EPISODE_NUMBER:
-                return extractField(from, EPISODE_NUMBER_PATTERN);
-            default:
-                throw new IllegalStateException("Unexpected field: " + field);
-        }
-    }
-
-    private String extractField(String from, Pattern pattern) {
+    private String extractFieldFrom(String from, Pattern pattern) {
         Matcher matcher = pattern.matcher(from);
         if (matcher.find()) {
             return matcher.group(0);
         }
         throw new InvalidParameterException("Format of \"title\" string is illegal");
-    }
-
-    private enum EpisodeField {
-        TV_SERIES_TITLE,
-        SEASON_NUMBER,
-        EPISODE_NUMBER
     }
 
 }
