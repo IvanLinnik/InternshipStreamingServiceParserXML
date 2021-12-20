@@ -1,11 +1,11 @@
-package io.skai.okta.internshipstreamingserviceparserxml.services.mapper;
+package io.skai.okta.internshipstreamingserviceparserxml.services.converter;
 
 import io.skai.okta.internshipstreamingserviceparserxml.dto.Episode;
 import io.skai.okta.internshipstreamingserviceparserxml.dto.LostFilmRssItem;
 import org.springframework.stereotype.Component;
 
 @Component
-public class EpisodesMapper {
+public class EpisodeConverter {
     public Episode map(LostFilmRssItem lostFilmRssItem) {
         String title = lostFilmRssItem.getTitle();
         int season = Integer.parseInt(extract(title, "season"));
