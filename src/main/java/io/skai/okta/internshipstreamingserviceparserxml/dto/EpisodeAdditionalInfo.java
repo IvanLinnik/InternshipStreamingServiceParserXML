@@ -9,6 +9,8 @@ public class EpisodeAdditionalInfo {
 
     long id;
 
+    long parentId;
+
     String imdbID;
 
     String seriesID;

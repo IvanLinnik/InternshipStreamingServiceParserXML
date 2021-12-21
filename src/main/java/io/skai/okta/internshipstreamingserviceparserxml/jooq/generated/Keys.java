@@ -34,6 +34,7 @@ public class Keys {
     // -------------------------------------------------------------------------
 
     public static final Identity<EpisodesRecord, Long> IDENTITY_EPISODES = Identities0.IDENTITY_EPISODES;
+    public static final Identity<EpisodesAdditionalDataRecord, Long> IDENTITY_EPISODES_ADDITIONAL_DATA = Identities0.IDENTITY_EPISODES_ADDITIONAL_DATA;
 
     // -------------------------------------------------------------------------
     // UNIQUE and PRIMARY KEY definitions
@@ -53,6 +54,7 @@ public class Keys {
 
     private static class Identities0 {
         public static Identity<EpisodesRecord, Long> IDENTITY_EPISODES = Internal.createIdentity(Episodes.EPISODES, Episodes.EPISODES.ID);
+        public static Identity<EpisodesAdditionalDataRecord, Long> IDENTITY_EPISODES_ADDITIONAL_DATA = Internal.createIdentity(EpisodesAdditionalData.EPISODES_ADDITIONAL_DATA, EpisodesAdditionalData.EPISODES_ADDITIONAL_DATA.ID);
     }
 
     private static class UniqueKeys0 {

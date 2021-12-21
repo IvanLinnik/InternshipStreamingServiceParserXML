@@ -26,20 +26,20 @@ public class EpisodeAdditionalInfoRepository {
 
     private boolean isPresent(EpisodeAdditionalInfo episodeAdditionalInfo) {
         return dslContext.selectFrom(EPISODES_ADDITIONAL_DATA)
-                         .where(EPISODES_ADDITIONAL_DATA.ID.eq(episodeAdditionalInfo.getId()))
+                         .where(EPISODES_ADDITIONAL_DATA.PARENT_ID.eq(episodeAdditionalInfo.getParentId()))
                          .fetchOptional(EPISODES_ADDITIONAL_DATA.ID)
                          .isPresent();
     }
 
     public void save(EpisodeAdditionalInfo episodeAdditionalInfo) {
         dslContext.insertInto(EPISODES_ADDITIONAL_DATA,
-                          EPISODES_ADDITIONAL_DATA.ID,
+                          EPISODES_ADDITIONAL_DATA.PARENT_ID,
                           EPISODES_ADDITIONAL_DATA.IMDB_ID,
                           EPISODES_ADDITIONAL_DATA.IMDB_RATING,
                           EPISODES_ADDITIONAL_DATA.IMDB_VOTES,
                           EPISODES_ADDITIONAL_DATA.RUNTIME,
                           EPISODES_ADDITIONAL_DATA.SERIES_ID)
-                  .values(episodeAdditionalInfo.getId(),
+                  .values(episodeAdditionalInfo.getParentId(),
                           episodeAdditionalInfo.getImdbID(),
                           episodeAdditionalInfo.getImdbRating(),
                           episodeAdditionalInfo.getImdbVotes(),
@@ -68,13 +68,14 @@ public class EpisodeAdditionalInfoRepository {
                   .set(EPISODES_ADDITIONAL_DATA.IMDB_VOTES, episodeAdditionalInfo.getImdbVotes())
                   .set(EPISODES_ADDITIONAL_DATA.RUNTIME, episodeAdditionalInfo.getRuntime())
                   .set(EPISODES_ADDITIONAL_DATA.SERIES_ID, episodeAdditionalInfo.getSeriesID())
-                  .where(EPISODES_ADDITIONAL_DATA.ID.eq(episodeAdditionalInfo.getId()))
+                  .where(EPISODES_ADDITIONAL_DATA.PARENT_ID.eq(episodeAdditionalInfo.getParentId()))
                   .execute();
     }
 
     private RecordMapper<EpisodesAdditionalDataRecord, EpisodeAdditionalInfo> getEpisodeAdditionalInfoRecordMapper() {
         return record -> EpisodeAdditionalInfo.builder()
                                               .id(record.getId())
+                                              .parentId(record.getParentId())
                                               .imdbID(record.getImdbId())
                                               .imdbRating(record.getImdbRating())
                                               .imdbVotes(record.getImdbVotes())

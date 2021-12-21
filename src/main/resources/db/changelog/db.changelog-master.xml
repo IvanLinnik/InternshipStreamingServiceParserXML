@@ -60,4 +60,14 @@
                         newDataType="VARCHAR(64)"/>
     </changeSet>
 
+    <changeSet author="Linnik Ivan" id="episodes_additional_data_modify_column1">
+        <addColumn tableName="episodes_additional_data">
+            <column name="parent_id" type="BIGINT"/>
+        </addColumn>
+
+        <addAutoIncrement tableName="episodes_additional_data"
+                          columnName="id"
+                          columnDataType="BIGINT"/>
+    </changeSet>
+
 </databaseChangeLog>

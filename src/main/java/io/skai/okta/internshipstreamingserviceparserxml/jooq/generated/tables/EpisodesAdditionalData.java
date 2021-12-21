@@ -29,7 +29,7 @@ import java.util.List;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class EpisodesAdditionalData extends TableImpl<EpisodesAdditionalDataRecord> {
 
-    private static final long serialVersionUID = 76997767;
+    private static final long serialVersionUID = 713980928;
 
     /**
      * The reference instance of <code>episodes_additional_data</code>
@@ -47,7 +47,7 @@ public class EpisodesAdditionalData extends TableImpl<EpisodesAdditionalDataReco
     /**
      * The column <code>episodes_additional_data.id</code>.
      */
-    public final TableField<EpisodesAdditionalDataRecord, Long> ID = createField("id", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<EpisodesAdditionalDataRecord, Long> ID = createField("id", org.jooq.impl.SQLDataType.BIGINT.nullable(false).identity(true), this, "");
 
     /**
      * The column <code>episodes_additional_data.imdb_id</code>.
@@ -73,6 +73,11 @@ public class EpisodesAdditionalData extends TableImpl<EpisodesAdditionalDataReco
      * The column <code>episodes_additional_data.runtime</code>.
      */
     public final TableField<EpisodesAdditionalDataRecord, String> RUNTIME = createField("runtime", org.jooq.impl.SQLDataType.VARCHAR(64), this, "");
+
+    /**
+     * The column <code>episodes_additional_data.parent_id</code>.
+     */
+    public final TableField<EpisodesAdditionalDataRecord, Long> PARENT_ID = createField("parent_id", org.jooq.impl.SQLDataType.BIGINT, this, "");
 
     /**
      * Create a <code>episodes_additional_data</code> table reference
@@ -113,6 +118,14 @@ public class EpisodesAdditionalData extends TableImpl<EpisodesAdditionalDataReco
     @Override
     public Schema getSchema() {
         return DefaultSchema.DEFAULT_SCHEMA;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Identity<EpisodesAdditionalDataRecord, Long> getIdentity() {
+        return Keys.IDENTITY_EPISODES_ADDITIONAL_DATA;
     }
 
     /**

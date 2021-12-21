@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 public class EpisodeAdditionalInfoConverter {
     public EpisodeAdditionalInfo convert(long episodeId, ImdbJsonItem imdbJsonItem) {
         return EpisodeAdditionalInfo.builder()
-                                    .id(episodeId)
+                                    .parentId(episodeId)
                                     .imdbID(imdbJsonItem.getImdbID())
                                     .imdbRating(imdbJsonItem.getImdbRating())
                                     .imdbVotes(imdbJsonItem.getImdbVotes())
