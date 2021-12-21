@@ -5,6 +5,7 @@ package io.skai.okta.internshipstreamingserviceparserxml.jooq.generated;
 
 
 import io.skai.okta.internshipstreamingserviceparserxml.jooq.generated.tables.Episodes;
+import io.skai.okta.internshipstreamingserviceparserxml.jooq.generated.tables.EpisodesAdditionalData;
 
 import javax.annotation.Generated;
 
@@ -26,4 +27,9 @@ public class Tables {
      * The table <code>episodes</code>.
      */
     public static final Episodes EPISODES = io.skai.okta.internshipstreamingserviceparserxml.jooq.generated.tables.Episodes.EPISODES;
+
+    /**
+     * The table <code>episodes_additional_data</code>.
+     */
+    public static final EpisodesAdditionalData EPISODES_ADDITIONAL_DATA = io.skai.okta.internshipstreamingserviceparserxml.jooq.generated.tables.EpisodesAdditionalData.EPISODES_ADDITIONAL_DATA;
 }
