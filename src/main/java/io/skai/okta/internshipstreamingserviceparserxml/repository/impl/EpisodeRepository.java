@@ -4,7 +4,6 @@ import io.skai.okta.internshipstreamingserviceparserxml.dto.Episode;
 import io.skai.okta.internshipstreamingserviceparserxml.jooq.generated.tables.records.EpisodesRecord;
 import io.skai.okta.internshipstreamingserviceparserxml.repository.VideoRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.jooq.DSLContext;
 import org.jooq.RecordMapper;
 import org.springframework.stereotype.Repository;
@@ -16,7 +15,6 @@ import static io.skai.okta.internshipstreamingserviceparserxml.jooq.generated.Ta
 
 @Repository
 @RequiredArgsConstructor
-@Slf4j
 public class EpisodeRepository implements VideoRepository {
     private final DSLContext dslContext;
 

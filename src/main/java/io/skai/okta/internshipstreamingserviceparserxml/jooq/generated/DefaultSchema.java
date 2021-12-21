@@ -5,6 +5,7 @@ package io.skai.okta.internshipstreamingserviceparserxml.jooq.generated;
 
 
 import io.skai.okta.internshipstreamingserviceparserxml.jooq.generated.tables.Episodes;
+import io.skai.okta.internshipstreamingserviceparserxml.jooq.generated.tables.EpisodesAdditionalData;
 import org.jooq.Catalog;
 import org.jooq.Table;
 import org.jooq.impl.SchemaImpl;
@@ -28,7 +29,7 @@ import java.util.List;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DefaultSchema extends SchemaImpl {
 
-    private static final long serialVersionUID = 1540230331;
+    private static final long serialVersionUID = 446120168;
 
     /**
      * The reference instance of <code></code>
@@ -39,6 +40,11 @@ public class DefaultSchema extends SchemaImpl {
      * The table <code>episodes</code>.
      */
     public final Episodes EPISODES = io.skai.okta.internshipstreamingserviceparserxml.jooq.generated.tables.Episodes.EPISODES;
+
+    /**
+     * The table <code>episodes_additional_data</code>.
+     */
+    public final EpisodesAdditionalData EPISODES_ADDITIONAL_DATA = io.skai.okta.internshipstreamingserviceparserxml.jooq.generated.tables.EpisodesAdditionalData.EPISODES_ADDITIONAL_DATA;
 
     /**
      * No further instances allowed
@@ -65,6 +71,7 @@ public class DefaultSchema extends SchemaImpl {
 
     private final List<Table<?>> getTables0() {
         return Arrays.<Table<?>>asList(
-            Episodes.EPISODES);
+            Episodes.EPISODES,
+            EpisodesAdditionalData.EPISODES_ADDITIONAL_DATA);
     }
 }
