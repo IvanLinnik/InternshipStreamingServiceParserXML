@@ -4,37 +4,40 @@ import io.skai.okta.internshipstreamingserviceparserxml.dto.Episode;
 import io.skai.okta.internshipstreamingserviceparserxml.dto.LostFilmRssItem;
 import org.springframework.stereotype.Component;
 
+import java.security.InvalidParameterException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 @Component
 public class EpisodeConverter {
+    private final static Pattern TVS_TITLE_PATTERN = Pattern.compile("(?<=\\().+?(?=\\))");
+    private final static Pattern SEASON_NUMBER_PATTERN = Pattern.compile("(?<=\\(S)\\d{2}(?=E\\d{2})");
+    private final static Pattern EPISODE_NUMBER_PATTERN = Pattern.compile("(?<=\\(S\\d{2}E)\\d{2}(?=\\))");
+
     public Episode map(LostFilmRssItem lostFilmRssItem) {
-        String title = lostFilmRssItem.getTitle();
-        int season = Integer.parseInt(extract(title, "season"));
-        int episodeNumber = Integer.parseInt(extract(title, "episode"));
-        String tvSeriesTitle = extract(title, "tvsTitle");
+        String episodeTitle = lostFilmRssItem.getTitle();
+
+        String tvSeriesTitle = extractFieldFrom(episodeTitle, TVS_TITLE_PATTERN);
+        int seasonNumber = Integer.parseInt(extractFieldFrom(episodeTitle, SEASON_NUMBER_PATTERN));
+        int episodeNumber = Integer.parseInt(extractFieldFrom(episodeTitle, EPISODE_NUMBER_PATTERN));
 
         return Episode.builder()
-                      .season(season)
+                      .season(seasonNumber)
                       .episodeNumber(episodeNumber)
                       .tvSeriesTitle(tvSeriesTitle)
-                      .title(title)
+                      .title(episodeTitle)
                       .description(lostFilmRssItem.getDescription())
                       .pubDate(lostFilmRssItem.getPubDate())
                       .link(lostFilmRssItem.getLink())
                       .build();
     }
 
-    private String extract(String from, String value) {
-        final String[] result = from.replaceAll("\\(", ")").split("\\)");
-        switch (value) {
-            case "tvsTitle":
-                return result[1];
-            case "season":
-                return result[3].substring(1, 3);
-            case "episode":
-                return result[3].substring(4, 6);
-            default:
-                throw new IllegalStateException("Unexpected value: " + value);
+    private String extractFieldFrom(String from, Pattern pattern) {
+        Matcher matcher = pattern.matcher(from);
+        if (matcher.find()) {
+            return matcher.group(0);
         }
+        throw new InvalidParameterException("Format of \"title\" string is illegal");
     }
 
 }
