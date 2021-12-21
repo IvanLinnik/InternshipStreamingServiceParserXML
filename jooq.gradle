@@ -29,7 +29,7 @@ task generateJooq {
                             inputSchema 'app'
                             outputSchemaToDefault true
                             includeIndexes false
-                            includes 'episodes'
+                            includes 'episodes|episodes_additional_data'
                             forcedTypes() {
                                 forcedType() {
                                     name 'BOOLEAN'

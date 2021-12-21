@@ -13,7 +13,6 @@ public class Episode {
     long id;
     int season;
     int episodeNumber;
-//    float imdbRating;
 
     String tvSeriesTitle;
 

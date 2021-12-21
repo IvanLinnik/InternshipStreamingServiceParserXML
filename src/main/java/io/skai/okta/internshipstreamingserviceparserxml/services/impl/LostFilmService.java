@@ -1,6 +1,7 @@
 package io.skai.okta.internshipstreamingserviceparserxml.services.impl;
 
 import io.skai.okta.internshipstreamingserviceparserxml.dto.Episode;
+import io.skai.okta.internshipstreamingserviceparserxml.kafka.MessageProducer;
 import io.skai.okta.internshipstreamingserviceparserxml.repository.VideoRepository;
 import io.skai.okta.internshipstreamingserviceparserxml.services.VideoService;
 import lombok.RequiredArgsConstructor;
@@ -12,10 +13,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LostFilmService implements VideoService {
     private final VideoRepository videoRepository;
+    private final MessageProducer messageProducer;
 
     @Override
     public void saveEpisode(Episode episode) {
         videoRepository.saveOrUpdate(episode);
+        messageProducer.produce("omdb", episode);
     }
 
     @Override
