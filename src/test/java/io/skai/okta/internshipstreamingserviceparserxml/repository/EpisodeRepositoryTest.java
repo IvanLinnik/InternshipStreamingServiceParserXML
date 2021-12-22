@@ -7,9 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
@@ -24,26 +22,19 @@ public class EpisodeRepositoryTest {
     }
 
     @Test
-    public void testEpisodeCanSaveAndRead() {
+    public void testEpisodeSuccessfulSaveAndGet() {
         Episode episode = Episode.builder()
-                                 .title("testTitle")
-                                 .description("testDescription")
-                                 .pubDate(LocalDateTime.now())
-                                 .link("testLink")
-                                 .season(1)
-                                 .episodeNumber(1)
-                                 .tvSeriesTitle("test tv series title")
-                                 .build();
+                                         .title("testTitle")
+                                         .description("testDescription")
+                                         .pubDate(LocalDateTime.now())
+                                         .link("testLink")
+                                         .season(1)
+                                         .episodeNumber(1)
+                                         .tvSeriesTitle("test tv series title")
+                                         .build();
 
         episodeRepository.saveOrUpdate(episode);
-
         assertNotNull(episodeRepository.get("testLink"));
-    }
-
-    @Test
-    public void testGetAll() {
-        List<Episode> episodes = episodeRepository.getAll();
-        assertThat(episodes).size().isGreaterThan(41);
     }
 
 }
