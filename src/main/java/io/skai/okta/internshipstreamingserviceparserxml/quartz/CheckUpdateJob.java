@@ -19,7 +19,7 @@ public class CheckUpdateJob implements Job {
     public void execute(JobExecutionContext context) {
         dataParser.getNewItems()
                   .stream()
-                  .map(episodeConverter::map)
+                  .map(episodeConverter::convert)
                   .forEach(videoService::saveEpisode);
     }
 }

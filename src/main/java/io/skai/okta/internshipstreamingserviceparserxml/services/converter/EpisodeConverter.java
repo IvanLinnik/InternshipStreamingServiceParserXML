@@ -14,7 +14,7 @@ public class EpisodeConverter {
     private final static Pattern SEASON_NUMBER_PATTERN = Pattern.compile("(?<=\\(S)\\d{2}(?=E\\d{2})");
     private final static Pattern EPISODE_NUMBER_PATTERN = Pattern.compile("(?<=\\(S\\d{2}E)\\d{2}(?=\\))");
 
-    public Episode map(LostFilmRssItem lostFilmRssItem) {
+    public Episode convert(LostFilmRssItem lostFilmRssItem) {
         String episodeTitle = lostFilmRssItem.getTitle();
 
         String tvSeriesTitle = extractFieldFrom(episodeTitle, TVS_TITLE_PATTERN);
