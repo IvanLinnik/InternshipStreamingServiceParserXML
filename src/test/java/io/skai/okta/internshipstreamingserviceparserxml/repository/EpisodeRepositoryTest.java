@@ -24,14 +24,14 @@ public class EpisodeRepositoryTest {
     @Test
     public void testEpisodeSuccessfulSaveAndGet() {
         Episode episode = Episode.builder()
-                                         .title("testTitle")
-                                         .description("testDescription")
-                                         .pubDate(LocalDateTime.now())
-                                         .link("testLink")
-                                         .season(1)
-                                         .episodeNumber(1)
-                                         .tvSeriesTitle("test tv series title")
-                                         .build();
+                                 .title("testTitle")
+                                 .description("testDescription")
+                                 .pubDate(LocalDateTime.now())
+                                 .link("testLink")
+                                 .season(1)
+                                 .episodeNumber(1)
+                                 .tvSeriesTitle("test tv series title")
+                                 .build();
 
         episodeRepository.saveOrUpdate(episode);
         assertNotNull(episodeRepository.get("testLink"));
