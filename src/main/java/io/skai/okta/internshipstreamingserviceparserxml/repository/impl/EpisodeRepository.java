@@ -59,7 +59,7 @@ public class EpisodeRepository implements VideoRepository {
     }
 
     @Override
-    public Episode get(String link) {
+    public Episode findByLink(String link) {
         return dslContext
                 .selectFrom(EPISODES)
                 .where(EPISODES.LINK.eq(link))

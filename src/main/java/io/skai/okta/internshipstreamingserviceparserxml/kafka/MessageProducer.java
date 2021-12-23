@@ -15,7 +15,7 @@ public class MessageProducer {
 
     @KafkaHandler
     public void produce(String topic, Episode episode) {
-        kafkaTemplate.send(topic, videoRepository.get(episode.getLink()));
+        kafkaTemplate.send(topic, videoRepository.findByLink(episode.getLink()));
     }
 
 }

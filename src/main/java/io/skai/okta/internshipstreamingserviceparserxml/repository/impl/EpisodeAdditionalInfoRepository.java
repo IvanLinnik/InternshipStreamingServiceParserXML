@@ -54,10 +54,10 @@ public class EpisodeAdditionalInfoRepository {
                 .fetch(getEpisodeAdditionalInfoRecordMapper());
     }
 
-    public EpisodeAdditionalInfo get(long parent_id) {
+    public EpisodeAdditionalInfo findByParentId(long parentId) {
         return dslContext
                 .selectFrom(EPISODES_ADDITIONAL_DATA)
-                .where(EPISODES_ADDITIONAL_DATA.PARENT_ID.eq(parent_id))
+                .where(EPISODES_ADDITIONAL_DATA.PARENT_ID.eq(parentId))
                 .fetchSingle(getEpisodeAdditionalInfoRecordMapper());
     }
 

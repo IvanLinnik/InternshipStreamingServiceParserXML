@@ -2,7 +2,6 @@ package io.skai.okta.internshipstreamingserviceparserxml.services.converter;
 
 import io.skai.okta.internshipstreamingserviceparserxml.dto.Episode;
 import io.skai.okta.internshipstreamingserviceparserxml.dto.LostFilmRssItem;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -21,27 +20,20 @@ class EpisodeConverterTest {
     @InjectMocks
     private EpisodeConverter converter;
 
-    private LostFilmRssItem item;
-
-    @BeforeEach
-    void setUp() {
-        item = LostFilmRssItem.builder()
-                              .title("Ведьмак (The Witcher). Крупица истины. (S02E01)")
-                              .description("![CDATA[<img src=\"//static.lostfilm.top/Images/466/Posters/image.jpg\" alt=\"\" /><br />]]")
-                              .pubDate(LocalDateTime.parse("Sun, 19 Dec 2021 20:57:00 +0000",
-                                      DateTimeFormatter.ofPattern("E, d MMM yyyy HH:mm:ss Z")))
-                              .link("https://www.lostfilmtv1.site/mr/series/The_Witcher/season_2/episode_1/")
-                              .build();
-    }
-
-    @Test
-    void testEpisodeShouldBeNotNull() {
-        assertNotNull(converter.convert(item));
-    }
+    private final LostFilmRssItem item = LostFilmRssItem
+            .builder()
+            .title("Ведьмак (The Witcher). Крупица истины. (S02E01)")
+            .description("![CDATA[<img src=\"//static.lostfilm.top/Images/466/Posters/image.jpg\" alt=\"\" /><br />]]")
+            .pubDate(LocalDateTime.parse("Sun, 19 Dec 2021 20:57:00 +0000",
+                    DateTimeFormatter.ofPattern("E, d MMM yyyy HH:mm:ss Z")))
+            .link("https://www.lostfilmtv1.site/mr/series/The_Witcher/season_2/episode_1/")
+            .build();
 
     @Test
     void testConvertShouldBeSuccessful() {
         Episode episode = converter.convert(item);
+
+        assertNotNull(episode);
 
         assertEquals(0, episode.getId());
         assertEquals("Ведьмак (The Witcher). Крупица истины. (S02E01)", episode.getTitle());
@@ -59,13 +51,12 @@ class EpisodeConverterTest {
 
     @Test
     void testConvertShouldThrowException() {
-        LostFilmRssItem wrongFormatOfTitleItem;
-        wrongFormatOfTitleItem = LostFilmRssItem.builder()
-                                                .title("WRONG FORMAT OF TITLE")
-                                                .description(item.getDescription())
-                                                .pubDate(item.getPubDate())
-                                                .link(item.getLink())
-                                                .build();
+        LostFilmRssItem wrongFormatOfTitleItem = LostFilmRssItem.builder()
+                                                                .title("WRONG FORMAT OF TITLE")
+                                                                .description(item.getDescription())
+                                                                .pubDate(item.getPubDate())
+                                                                .link(item.getLink())
+                                                                .build();
 
         assertThrows(InvalidParameterException.class, () -> converter.convert(wrongFormatOfTitleItem));
     }

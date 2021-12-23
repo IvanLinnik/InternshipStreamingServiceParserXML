@@ -13,7 +13,7 @@ public interface VideoRepository {
 
     List<Episode> getAll();
 
-    Episode get(String link);
+    Episode findByLink(String link);
 
     void update(Episode episode);
 

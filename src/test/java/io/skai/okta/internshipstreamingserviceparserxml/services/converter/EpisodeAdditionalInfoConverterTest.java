@@ -2,7 +2,6 @@ package io.skai.okta.internshipstreamingserviceparserxml.services.converter;
 
 import io.skai.okta.internshipstreamingserviceparserxml.dto.EpisodeAdditionalInfo;
 import io.skai.okta.internshipstreamingserviceparserxml.dto.ImdbJsonItem;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -20,28 +19,21 @@ class EpisodeAdditionalInfoConverterTest {
     @InjectMocks
     EpisodeAdditionalInfoConverter converter;
 
-    private ImdbJsonItem item;
+    private final ImdbJsonItem item = ImdbJsonItem.builder()
+                                                  .imdbID("tt1480055")
+                                                  .seriesID("tt0944947")
+                                                  .imdbRating("9.1")
+                                                  .imdbVotes("44868")
+                                                  .runtime("62 min")
+                                                  .build();
+
     private static final Pattern ID_PATTERN = Pattern.compile("(?<=t{2})\\d+");
-
-    @BeforeEach
-    void setUp() {
-        item = ImdbJsonItem.builder()
-                           .imdbID("tt1480055")
-                           .seriesID("tt0944947")
-                           .imdbRating("9.1")
-                           .imdbVotes("44868")
-                           .runtime("62 min")
-                           .build();
-    }
-
-    @Test
-    void testConvertAdditionalInfoShouldBeNotNull() {
-        assertNotNull(converter.convert(9379992, item));
-    }
 
     @Test
     void testConvertAdditionalInfoShouldBeSuccessful() {
         EpisodeAdditionalInfo info = converter.convert(9379992, item);
+
+        assertNotNull(info);
 
         assertEquals(0, info.getId());
         assertEquals(9379992, info.getParentId());
