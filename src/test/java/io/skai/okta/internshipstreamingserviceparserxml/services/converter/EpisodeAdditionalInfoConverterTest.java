@@ -4,6 +4,9 @@ import io.skai.okta.internshipstreamingserviceparserxml.dto.EpisodeAdditionalInf
 import io.skai.okta.internshipstreamingserviceparserxml.dto.ImdbJsonItem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.regex.Pattern;
 
@@ -11,44 +14,47 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+@ExtendWith(MockitoExtension.class)
 class EpisodeAdditionalInfoConverterTest {
-    private EpisodeAdditionalInfo additionalInfo;
+
+    @InjectMocks
+    EpisodeAdditionalInfoConverter converter;
+
+    private ImdbJsonItem item;
     private static final Pattern ID_PATTERN = Pattern.compile("(?<=t{2})\\d+");
 
     @BeforeEach
     void setUp() {
-        EpisodeAdditionalInfoConverter converter = new EpisodeAdditionalInfoConverter();
-
-        ImdbJsonItem item = ImdbJsonItem.builder()
-                                        .imdbID("tt1480055")
-                                        .seriesID("tt0944947")
-                                        .imdbRating("9.1")
-                                        .imdbVotes("44868")
-                                        .runtime("62 min")
-                                        .build();
-
-        additionalInfo = converter.convert(9379992, item);
+        item = ImdbJsonItem.builder()
+                           .imdbID("tt1480055")
+                           .seriesID("tt0944947")
+                           .imdbRating("9.1")
+                           .imdbVotes("44868")
+                           .runtime("62 min")
+                           .build();
     }
 
     @Test
     void testConvertAdditionalInfoShouldBeNotNull() {
-        assertNotNull(additionalInfo);
+        assertNotNull(converter.convert(9379992, item));
     }
 
     @Test
     void testConvertAdditionalInfoShouldBeSuccessful() {
-        assertEquals(0, additionalInfo.getId());
-        assertEquals(9379992, additionalInfo.getParentId());
-        assertEquals("tt1480055", additionalInfo.getImdbID());
-        assertEquals("tt0944947", additionalInfo.getSeriesID());
-        assertEquals("9.1", additionalInfo.getImdbRating());
-        assertEquals("44868", additionalInfo.getImdbVotes());
-        assertEquals("62 min", additionalInfo.getRuntime());
+        EpisodeAdditionalInfo info = converter.convert(9379992, item);
 
-        assertThat(additionalInfo.getImdbRating()).contains(".");
-        assertThat(additionalInfo.getRuntime()).contains(" min");
-        assertThat(additionalInfo.getImdbID()).contains("tt").containsPattern(ID_PATTERN);
-        assertThat(additionalInfo.getSeriesID()).contains("tt").containsPattern(ID_PATTERN);
+        assertEquals(0, info.getId());
+        assertEquals(9379992, info.getParentId());
+        assertEquals("tt1480055", info.getImdbID());
+        assertEquals("tt0944947", info.getSeriesID());
+        assertEquals("9.1", info.getImdbRating());
+        assertEquals("44868", info.getImdbVotes());
+        assertEquals("62 min", info.getRuntime());
+
+        assertThat(info.getImdbRating()).contains(".");
+        assertThat(info.getRuntime()).contains(" min");
+        assertThat(info.getImdbID()).contains("tt").containsPattern(ID_PATTERN);
+        assertThat(info.getSeriesID()).contains("tt").containsPattern(ID_PATTERN);
     }
 
 }

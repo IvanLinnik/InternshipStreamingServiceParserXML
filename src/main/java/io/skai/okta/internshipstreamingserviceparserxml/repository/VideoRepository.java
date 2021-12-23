@@ -19,4 +19,5 @@ public interface VideoRepository {
 
     Optional<Long> getId(String link);
 
+    void delete(String link);
 }

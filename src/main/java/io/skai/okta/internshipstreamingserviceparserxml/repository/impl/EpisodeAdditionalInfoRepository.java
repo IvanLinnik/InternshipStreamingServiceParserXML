@@ -54,10 +54,10 @@ public class EpisodeAdditionalInfoRepository {
                 .fetch(getEpisodeAdditionalInfoRecordMapper());
     }
 
-    public EpisodeAdditionalInfo get(long id) {
+    public EpisodeAdditionalInfo get(long parent_id) {
         return dslContext
                 .selectFrom(EPISODES_ADDITIONAL_DATA)
-                .where(EPISODES_ADDITIONAL_DATA.ID.eq(id))
+                .where(EPISODES_ADDITIONAL_DATA.PARENT_ID.eq(parent_id))
                 .fetchSingle(getEpisodeAdditionalInfoRecordMapper());
     }
 
@@ -69,6 +69,12 @@ public class EpisodeAdditionalInfoRepository {
                   .set(EPISODES_ADDITIONAL_DATA.RUNTIME, episodeAdditionalInfo.getRuntime())
                   .set(EPISODES_ADDITIONAL_DATA.SERIES_ID, episodeAdditionalInfo.getSeriesID())
                   .where(EPISODES_ADDITIONAL_DATA.PARENT_ID.eq(episodeAdditionalInfo.getParentId()))
+                  .execute();
+    }
+
+    public void delete(long parentId) {
+        dslContext.deleteFrom(EPISODES_ADDITIONAL_DATA)
+                  .where(EPISODES_ADDITIONAL_DATA.PARENT_ID.eq(parentId))
                   .execute();
     }
 

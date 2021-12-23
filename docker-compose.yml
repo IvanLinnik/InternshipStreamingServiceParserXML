@@ -35,3 +35,9 @@ services:
       KAFKA_TOOLS_LOG4J_LOGLEVEL: ERROR
     logging:
       driver: none
+  wiremock:
+    container_name: app_mock
+    ports:
+      - "8089:8089"
+    image: "rodolpheche/wiremock"
+    command: --port 8089

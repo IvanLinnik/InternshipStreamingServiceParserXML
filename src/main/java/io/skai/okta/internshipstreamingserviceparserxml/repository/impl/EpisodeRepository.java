@@ -86,6 +86,13 @@ public class EpisodeRepository implements VideoRepository {
                          .fetchOptional(EPISODES.ID);
     }
 
+    @Override
+    public void delete(String link) {
+        dslContext.deleteFrom(EPISODES)
+                  .where(EPISODES.LINK.eq(link))
+                  .execute();
+    }
+
     private RecordMapper<EpisodesRecord, Episode> getEpisodeRecordMapper() {
         return record -> Episode.builder()
                                 .id(record.getId())

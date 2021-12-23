@@ -4,6 +4,9 @@ import io.skai.okta.internshipstreamingserviceparserxml.dto.Episode;
 import io.skai.okta.internshipstreamingserviceparserxml.dto.LostFilmRssItem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.security.InvalidParameterException;
 import java.time.LocalDateTime;
@@ -12,15 +15,16 @@ import java.time.format.DateTimeFormatter;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
+@ExtendWith(MockitoExtension.class)
 class EpisodeConverterTest {
+
+    @InjectMocks
     private EpisodeConverter converter;
+
     private LostFilmRssItem item;
-    private Episode episode;
 
     @BeforeEach
     void setUp() {
-        converter = new EpisodeConverter();
-
         item = LostFilmRssItem.builder()
                               .title("Ведьмак (The Witcher). Крупица истины. (S02E01)")
                               .description("![CDATA[<img src=\"//static.lostfilm.top/Images/466/Posters/image.jpg\" alt=\"\" /><br />]]")
@@ -28,17 +32,17 @@ class EpisodeConverterTest {
                                       DateTimeFormatter.ofPattern("E, d MMM yyyy HH:mm:ss Z")))
                               .link("https://www.lostfilmtv1.site/mr/series/The_Witcher/season_2/episode_1/")
                               .build();
-
-        episode = converter.convert(item);
     }
 
     @Test
     void testEpisodeShouldBeNotNull() {
-        assertNotNull(episode);
+        assertNotNull(converter.convert(item));
     }
 
     @Test
     void testConvertShouldBeSuccessful() {
+        Episode episode = converter.convert(item);
+
         assertEquals(0, episode.getId());
         assertEquals("Ведьмак (The Witcher). Крупица истины. (S02E01)", episode.getTitle());
         assertEquals("![CDATA[<img src=\"//static.lostfilm.top/Images/466/Posters/image.jpg\" alt=\"\" /><br />]]", episode.getDescription());
