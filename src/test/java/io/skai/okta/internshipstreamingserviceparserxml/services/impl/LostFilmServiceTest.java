@@ -14,9 +14,7 @@ import java.time.format.DateTimeFormatter;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-
 
 @ExtendWith(MockitoExtension.class)
 class LostFilmServiceTest {
@@ -45,16 +43,8 @@ class LostFilmServiceTest {
     @Test
     void testSaveEpisodeSuccessful() {
         service.saveEpisode(episode);
-        service.saveEpisode(episode);
-        verify(repository, times(2)).saveOrUpdate(episode);
-        verify(producer, times(2)).produce(eq("omdb"), eq(episode));
-        /*
-        mockito couldn't check invocation of this methods in "saveOrUpdate()"?
-        {
-            verify(repository).save(episode);
-            verify(repository).update(episode);
-        }
-        */
+        verify(repository).saveOrUpdate(episode);
+        verify(producer).produce(eq("omdb"), eq(episode));
     }
 
     @Test
