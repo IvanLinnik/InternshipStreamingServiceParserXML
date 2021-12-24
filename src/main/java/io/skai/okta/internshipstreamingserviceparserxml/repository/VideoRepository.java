@@ -13,10 +13,11 @@ public interface VideoRepository {
 
     List<Episode> getAll();
 
-    Episode get(String link);
+    Episode findByLink(String link);
 
     void update(Episode episode);
 
     Optional<Long> getId(String link);
 
+    void delete(String link);
 }

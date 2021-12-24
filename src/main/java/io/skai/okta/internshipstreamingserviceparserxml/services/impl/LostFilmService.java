@@ -28,7 +28,7 @@ public class LostFilmService implements VideoService {
 
     @Override
     public Episode get(String link) {
-        return videoRepository.get(link);
+        return videoRepository.findByLink(link);
     }
 
 }

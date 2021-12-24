@@ -50,7 +50,6 @@ class XmlParserLostFilm implements DataParser {
             builder = factory.newDocumentBuilder();
         } catch (ParserConfigurationException e) {
             log.error("Error in build document method: ", e);
-            e.printStackTrace();
         }
         Document document = null;
         try {
